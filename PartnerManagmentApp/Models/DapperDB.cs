@@ -5,16 +5,54 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+
 namespace PartnerManagmentApp.Models
 {
-    public class DapperDB
+    public static class DapperDB
     {
-        SqlConnection conn = new SqlConnection("Data Source=STJEPAN\\SQLEXPRESS;Initial Catalog=Partner_Managment;Integrated Security=True");
+        private static string connectionString = @"Data Source=STJEPAN\SQLEXPRESS;Initial Catalog=Partner_Managment;Integrated Security=True;";
 
-        public List<PartnerModel> GetPartners()
+
+        public static void ExecuteWithoutReturn(string procedureName, DynamicParameters param = null)
         {
-            var Partners = conn.Query<PartnerModel>("select * from Partners");
-            return Partners.ToList();
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                sqlCon.Open();
+                sqlCon.Execute(procedureName, param, commandType: CommandType.StoredProcedure);
+            }
+
+        }
+
+        //DapperORM.ExecuteReturnScalar<int>(_,_);
+        public static T ExecuteReturnScalar<T>(string procedureName, DynamicParameters param = null)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                sqlCon.Open();
+                return (T)Convert.ChangeType(sqlCon.ExecuteScalar(procedureName, param, commandType: CommandType.StoredProcedure), typeof(T));
+            }
+
+        }
+
+        //DapperORM.ReturnList<EmployeeModel> <=  IEnumerable<EmployeeModel>
+        public static IEnumerable<T> ReturnList<T>(string procedureName, DynamicParameters param = null)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                sqlCon.Open();
+                return sqlCon.Query<T>(procedureName, param, commandType: CommandType.StoredProcedure);
+            }
+
+        }
+        public static IEnumerable<PartnerTypeModel> GetPartnerList()
+        {
+            using (SqlConnection sqlcon = new SqlConnection(connectionString))
+            {
+                string query = "SELECT sifra,naziv FROM Partner_Type";
+                var result = sqlcon.Query<PartnerTypeModel>(query);
+                return result;
+            }
         }
     }
+    
 }

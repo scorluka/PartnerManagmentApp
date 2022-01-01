@@ -123,6 +123,7 @@
     </Compile>
     <Compile Include="Models\DapperDB.cs" />
     <Compile Include="Models\PartnerModel.cs" />
+    <Compile Include="Models\PartnerTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +199,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\AddOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartnerManagmentApp.Models
 {
@@ -19,6 +20,5 @@ namespace PartnerManagmentApp.Models
         public Boolean IsForeign { get; set; }
         public string ExtenalCode { get; set; }
         public string Gender { get; set; }
-
     }
 }
