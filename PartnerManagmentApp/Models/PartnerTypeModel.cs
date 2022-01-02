@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartnerManagmentApp.Models
 {
@@ -9,5 +10,6 @@ namespace PartnerManagmentApp.Models
     {
         public int Sifra { get; set; }
         public string Naziv { get; set; }
+        public SelectList PartnerList { get; set; }
     }
 }

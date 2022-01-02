@@ -22,8 +22,22 @@ namespace PartnerManagmentApp.Controllers
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
-            var PartnerType = new SelectList(DapperDB.GetPartnerList());
-            ViewData["PartnerType"] = PartnerType;
+            
+             var PartnerList = new SelectList(DapperDB.GetPartnerList(), "Sifra", "Naziv");
+            ViewData["PartnerType"] = PartnerList;
+   
+            List<SelectListItem> Gender = new List<SelectListItem>() {
+                new SelectListItem {
+                    Text="Male", Value="M"
+                },
+                new SelectListItem {
+                    Text="Female", Value = "F"
+                },
+                new SelectListItem {
+                    Text="Neutral", Value = "N"
+                },
+            };
+            ViewData["Gender"] = Gender;
             if (id == 0)
                 return View();
             else
@@ -38,16 +52,15 @@ namespace PartnerManagmentApp.Controllers
         public ActionResult AddOrEdit(PartnerModel pm)
         {
             DynamicParameters param = new DynamicParameters();
-            param.Add("@Name", pm.FirstName);
-            param.Add("@LasnName", pm.LastName);
+            param.Add("@FirstName", pm.FirstName);
+            param.Add("@LastName", pm.LastName);
             param.Add("@Address", pm.Address);
             param.Add("@PartnerNumber", pm.PartnerNumber);
             param.Add("@CroatianPIN", pm.CroatianPIN);
             param.Add("@PartnerTypeId", pm.PartnerTypeId);
-            param.Add("@CreateAtUtc", pm.CreateAtUtc);
             param.Add("@CreateByUser", pm.CreateByUser);
             param.Add("@IsForeign", pm.IsForeign);
-            param.Add("@ExtenalCode", pm.ExtenalCode);
+            param.Add("@ExternalCode", pm.ExternalCode);
             param.Add("@Gender", pm.Gender);
             DapperDB.ExecuteWithoutReturn("PartnerAddOrEdit", param);
             return RedirectToAction("Index");

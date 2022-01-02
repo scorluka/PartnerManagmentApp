@@ -6,9 +6,7 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "AddOrEdit", "Home")
-</p>
+<a class="popup btn btn-primary" href="/Home/AddOrEdit" style="margin-bottom:20px; margin-top:20px;">Dodaj partnera</a>
 <table class="table">
     <tr>
         <th scope="col">
@@ -33,7 +31,7 @@
             @Html.DisplayNameFor(model => model.PartnerTypeId)
         </th>
         <th scope="col">
-            @Html.DisplayNameFor(model => model.CreateAtUtc)
+            @Html.DisplayNameFor(model => model.CreatedAtUtc)
         </th>
         <th scope="col">
             @Html.DisplayNameFor(model => model.CreateByUser)
@@ -42,7 +40,7 @@
             @Html.DisplayNameFor(model => model.IsForeign)
         </th>
         <th scope="col">
-            @Html.DisplayNameFor(model => model.ExtenalCode)
+            @Html.DisplayNameFor(model => model.ExternalCode)
         </th>
         <th scope="col">
             @Html.DisplayNameFor(model => model.Gender)
@@ -74,7 +72,7 @@
             @Html.DisplayFor(modelItem => item.PartnerTypeId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreateAtUtc)
+            @Html.DisplayFor(modelItem => item.CreatedAtUtc)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreateByUser)
@@ -83,7 +81,7 @@
             @Html.DisplayFor(modelItem => item.IsForeign)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ExtenalCode)
+            @Html.DisplayFor(modelItem => item.ExternalCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Gender)

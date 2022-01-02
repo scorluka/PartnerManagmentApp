@@ -46,13 +46,14 @@ namespace PartnerManagmentApp.Models
         }
         public static IEnumerable<PartnerTypeModel> GetPartnerList()
         {
-            using (SqlConnection sqlcon = new SqlConnection(connectionString))
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
-                string query = "SELECT sifra,naziv FROM Partner_Type";
-                var result = sqlcon.Query<PartnerTypeModel>(query);
+                string query = "SELECT [Sifra],[Naziv]FROM [Partner_Type]";
+                var result = sqlCon.Query<PartnerTypeModel>(query);
                 return result;
             }
         }
+
     }
     
 }

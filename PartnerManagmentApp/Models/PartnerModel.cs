@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,16 +10,20 @@ namespace PartnerManagmentApp.Models
     public class PartnerModel
     {
         public int PartnerId { get; set; }
+        [MinLength(2)]
         public string FirstName { get; set; }
+        [MinLength(2)]
         public string LastName { get; set; }
         public string Address { get; set; }
-        public int PartnerNumber { get; set; }
-        public int CroatianPIN { get; set; }
+        public Int64 PartnerNumber { get; set; }
+        public Int64 CroatianPIN { get; set; }
         public int PartnerTypeId { get; set; }
-        public DateTime CreateAtUtc { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
+        public DateTime CreatedAtUtc { get; set; }
         public string CreateByUser { get; set; }
         public Boolean IsForeign { get; set; }
-        public string ExtenalCode { get; set; }
+        [MaxLength(20), MinLength(10)]
+        public string ExternalCode { get; set; }
         public string Gender { get; set; }
     }
 }
