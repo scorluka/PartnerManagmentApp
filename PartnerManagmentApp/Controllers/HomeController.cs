@@ -13,7 +13,7 @@ namespace PartnerManagmentApp.Controllers
 
         public ActionResult Index()
         {
-            return View(DapperDB.ReturnList<PartnerModel>("PartnerViewAll"));
+            return View(DapperDB.ReturnList<PartnerViewModel>("PartnerViewAll"));
         }
 
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PartnerManagmentApp.Models.PartnerModel>
+﻿@model IEnumerable<PartnerManagmentApp.Models.PartnerViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -7,19 +7,10 @@
 <h2>Index</h2>
 
 <a class="popup btn btn-primary" href="/Home/AddOrEdit" style="margin-bottom:20px; margin-top:20px;">Dodaj partnera</a>
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th scope="col">
-            @Html.DisplayNameFor(model => model.PartnerId)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.FullName)
         </th>
         <th scope="col">
             @Html.DisplayNameFor(model => model.PartnerNumber)
@@ -34,13 +25,7 @@
             @Html.DisplayNameFor(model => model.CreatedAtUtc)
         </th>
         <th scope="col">
-            @Html.DisplayNameFor(model => model.CreateByUser)
-        </th>
-        <th scope="col">
             @Html.DisplayNameFor(model => model.IsForeign)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.ExternalCode)
         </th>
         <th scope="col">
             @Html.DisplayNameFor(model => model.Gender)
@@ -48,50 +33,76 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartnerId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartnerNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CroatianPIN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PartnerTypeId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAtUtc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateByUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsForeign)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExternalCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CroatianPIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAtUtc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsForeign)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                <a class="popup btn btn-danger" href="/Home/Delete">Izbriši</a>
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Detalji</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="fullname" class="col-form-label">FullName:</label>
+                    <input type="text" class="form-control-sm" id="fullname">
+                </div>
+                <p><input type="text" class="form-control" id="partnerNumber" /></p>
+                <p><input type="text" class="input-sm" id="pin" /></p>
+                <p><input type="text" class="input-sm" id="type" /></p>
+                <p><input type="text" class="input-sm" id="created" /></p>
+                <p><input type="text" class="input-sm" id="foreign" /></p>
+                <p><input type="text" class="input-sm" id="gender" /></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@section scripts{
+<script>
+    $('table tbody tr  td').on('click', function () {
+        $("#myModal").modal("show");
+        $("#fullname").val($(this).closest('tr').children()[0].textContent);
+        $("#partnerNumber").val($(this).closest('tr').children()[1].textContent);
+        $("#pin").val($(this).closest('tr').children()[2].textContent);
+        $("#type").val($(this).closest('tr').children()[3].textContent);
+        $("#created").val($(this).closest('tr').children()[4].textContent);
+        $("#foreign").val($(this).closest('tr').children()[5].textContent);
+        $("#gender").val($(this).closest('tr').children()[6].textContent);
+    });
+</script>
+}
