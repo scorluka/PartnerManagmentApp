@@ -9,6 +9,7 @@ namespace PartnerManagmentApp.Models
 {
     public class PartnerModel
     {
+        public string FullName { get; set; }
         public int PartnerId { get; set; }
         [MinLength(2)]
         public string FirstName { get; set; }
@@ -22,6 +23,8 @@ namespace PartnerManagmentApp.Models
         public int PartnerTypeId { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime CreatedAtUtc { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string CreateByUser { get; set; }
         public Boolean IsForeign { get; set; }
         [MaxLength(20), MinLength(10)]

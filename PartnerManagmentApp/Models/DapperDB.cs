@@ -53,6 +53,15 @@ namespace PartnerManagmentApp.Models
                 return result;
             }
         }
+        public static IEnumerable<PartnerLastIdModel> GetLastId()
+        {
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                string query = "SELECT TOP 1 [PartnerId] FROM [Partners] ORDER BY CreatedAtUtc DESC";
+                var result = sqlCon.Query<PartnerLastIdModel>(query);
+                return result;
+            }
+        }
 
     }
     

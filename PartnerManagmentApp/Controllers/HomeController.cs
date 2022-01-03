@@ -13,7 +13,9 @@ namespace PartnerManagmentApp.Controllers
 
         public ActionResult Index()
         {
-            return View(DapperDB.ReturnList<PartnerViewModel>("PartnerViewAll"));
+            var partners = DapperDB.ReturnList<PartnerViewModel>("PartnerViewAll");
+            ViewBag.Partners = partners;
+            return View();
         }
 
 
@@ -72,6 +74,13 @@ namespace PartnerManagmentApp.Controllers
             param.Add("@PartnerId", id);
             DapperDB.ExecuteWithoutReturn("PartnerDeleteById", param);
             return RedirectToAction("Index");
+        }
+        public ActionResult Details(int id)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@PartnerId", id);
+            var details = DapperDB.ReturnList<PartnerModel>("PartnerViewById", param).FirstOrDefault<PartnerModel>();
+            return PartialView("_Details", details);
         }
     }
 }

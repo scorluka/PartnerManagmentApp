@@ -1,108 +1,125 @@
-﻿@model IEnumerable<PartnerManagmentApp.Models.PartnerViewModel>
+﻿@model PartnerManagmentApp.Models.PartnerViewModel
 
 @{
     ViewBag.Title = "Index";
 }
-
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <h2>Index</h2>
-
-<a class="popup btn btn-primary" href="/Home/AddOrEdit" style="margin-bottom:20px; margin-top:20px;">Dodaj partnera</a>
-<table class="table table-hover">
-    <tr>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.PartnerNumber)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.CroatianPIN)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.PartnerTypeId)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.CreatedAtUtc)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.IsForeign)
-        </th>
-        <th scope="col">
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartnerNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CroatianPIN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartnerTypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAtUtc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsForeign)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                <a class="popup btn btn-danger" href="/Home/Delete">Izbriši</a>
-            </td>
-        </tr>
-    }
-
-</table>
-
-<div class="modal fade" id="myModal">
+<div id='myModal' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Detalji</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="fullname" class="col-form-label">FullName:</label>
-                    <input type="text" class="form-control-sm" id="fullname">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+ </div>
+    <a class="popup btn btn-primary" href="/Home/AddOrEdit" style="margin-bottom:20px; margin-top:20px;">Dodaj partnera</a>
+    <table class="table table-hover">
+        <tr>
+            <th scope="col">
+                FullName
+            </th>
+            <th scope="col">
+                PartnerNumber
+            </th>
+            <th scope="col">
+                CroatianPIN
+            </th>
+            <th scope="col">
+                PartnerTypeId
+            </th>
+            <th scope="col">
+                CreatedAtUtc
+            </th>
+            <th scope="col">
+                IsForeign
+            </th>
+            <th scope="col">
+                Gender
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in ViewBag.Partners)
+        {
+            var className = "";
+            if (@ViewBag.PartnerId != null && @ViewBag.PartnerId == item.PartnerId)
+            {
+                className = "alert-info";
+            }
+            <tr class="@className">
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @item.PartnerNumber
+                </td>
+                <td>
+                    @item.CroatianPIN
+                </td>
+                <td>
+                    @item.PartnerTypeId
+                </td>
+                <td>
+                    @item.CreatedAtUtc
+                </td>
+                <td>
+                    @item.IsForeign
+                </td>
+                <td>
+                    @item.Gender
+                </td>
+                <td>
+                    <a href="javascript:void(0)" class="btn btn-primary anchorDetail" data-id="@item.PartnerId">Detalji</a>
+                    @Html.ActionLink("Izbriši", "Delete", new { id = item.PartnerId }, new { @class="btn btn-danger"})
+                </td>
+            </tr>
+        }
+
+    </table>
+    @*<div class="modal fade" id="partnerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Partner Information</h2>
                 </div>
-                <p><input type="text" class="form-control" id="partnerNumber" /></p>
-                <p><input type="text" class="input-sm" id="pin" /></p>
-                <p><input type="text" class="input-sm" id="type" /></p>
-                <p><input type="text" class="input-sm" id="created" /></p>
-                <p><input type="text" class="input-sm" id="foreign" /></p>
-                <p><input type="text" class="input-sm" id="gender" /></p>
+                <div class="modal-body">
+                    <label>Full Name:</label>
+                    <h2>@Html.DisplayFor(m => m.FullName)</h2>
+                    <label>Partner Number:</label>
+                    <h2>@Html.DisplayFor(m => m.PartnerNumber)</h2>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <a href="#" id="btnCancel" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>*@
 
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    @section scripts{
+        <script>
+            var TeamDetailPostBackURL = '/Home/Details';
+            $(function () {
+                $(".anchorDetail").click(function () {
+                    var $buttonClicked = $(this);
+                    var id = $buttonClicked.attr('data-id');
+                    $.ajax({
+                        type: "GET",
+                        url: TeamDetailPostBackURL,
+                        contentType: "application/json; charset=utf-8",
+                        data: { "Id": id },
+                        datatype: "json",
+                        success: function (data) {
+                            $('#myModalContent').html(data);
+                            $('#myModal').modal('show');
 
-@section scripts{
-<script>
-    $('table tbody tr  td').on('click', function () {
-        $("#myModal").modal("show");
-        $("#fullname").val($(this).closest('tr').children()[0].textContent);
-        $("#partnerNumber").val($(this).closest('tr').children()[1].textContent);
-        $("#pin").val($(this).closest('tr').children()[2].textContent);
-        $("#type").val($(this).closest('tr').children()[3].textContent);
-        $("#created").val($(this).closest('tr').children()[4].textContent);
-        $("#foreign").val($(this).closest('tr').children()[5].textContent);
-        $("#gender").val($(this).closest('tr').children()[6].textContent);
-    });
-</script>
-}
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+                });
+            })
+        </script>
+    }
